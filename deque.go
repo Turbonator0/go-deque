@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package deque
 
 type deque struct {
 	content []any
@@ -19,6 +17,7 @@ func (d *deque) pop() any { // Pop has to yield the popped value
 }
 
 func (d *deque) push(v any) deque {
+	d.content = append(d.content, v)
 	return *d
 }
 
@@ -29,22 +28,20 @@ func (d *deque) popleft() any {
 }
 
 func (d *deque) pushleft(v any) deque {
+	d.content = append([]any{v}, d.content...)
 	return *d
 }
 
-func (d *deque) len() deque {
-	return *d
+func (d *deque) len() int {
+	return len(d.content)
 }
 
-func (d *deque) count(v any) deque {
-	return *d
-}
-
-func main() {
-	testque := deque_init([]any{1, 2, 3, 4, 5})
-	fmt.Println(testque.content...)
-	fmt.Println(testque.pop())
-	fmt.Println(testque.content...)
-	fmt.Println(testque.popleft())
-	fmt.Println(testque.content...)
+func (d *deque) count(v any) int {
+	count := 0
+	for _, c := range d.content { // super slow but oh well
+		if c == v {
+			count++
+		}
+	}
+	return count
 }
